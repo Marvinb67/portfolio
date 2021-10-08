@@ -20,13 +20,14 @@ if(isset($_POST['confirmation'])){
   if(empty($_POST['confirmation'])){
     $errors['confirmation'] = 'Ce champ ne peut pas être vide';
   }else if($_POST['confirmation'] !== $_POST['password']){
-  $errors['confirmation'] = 'Les mots de passe de correspondent pas';
+  $errors['confirmation'] = 'Les mots ne passe de correspondent pas';
 }
 };
 if(isset($_POST['pseudo'])){
-  $errors['pseudo'] = 'Ce champ ne peut pas être vide';
+  if(empty($_POST['pseudo'])){
+  $errors['pseudo'] = 'Ce champ ne peut pas être vide';}
 }else if(strlen($_POST['pseudo']) <3 || strlen($_POST['pseudo']) >30){
-  $errors['pseudo'] = 'Votre pseudo doit faire entre 3 et 30 caractère';
+  $errors['pseudo'] = 'Votre pseudo doit faire entre 5 et 30 caractère';
 }
 };
 
@@ -47,7 +48,7 @@ if(isset($_POST['pseudo'])){
   </head>
   <body>    
     <form method="POST">
-        <h1>Inscription</h1><br>
+        <h1 class = "text-warning">Inscription</h1><br>
         <div class="form-group">
             <label for="exampleInputEmail1">Adresse email</label>
             <input type="email" class="form-control <?= isset($errors['mail']) ? 'is-invalid' : '';?>" id="exampleInputEmail1" name= "mail" aria-describedby="emailHelp">
