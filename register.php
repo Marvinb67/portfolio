@@ -9,27 +9,39 @@ if(isset($_POST['mail'])){
   if(empty($_POST['mail'])){
     $errors['mail'] = 'Ce champ ne peut pas être vide';
   }
-};
+}
 
 if(isset($_POST['password'])){
   if(empty($_POST['password'])){
     $errors['password'] = 'Ce champ ne peut pas être vide';
+  }else {
+    $password_encoder = password_hash($_POST['password'],PASSWORD_DEFAULT);
+    var_dump($password_encoder);
   }
-};
+}
+
 if(isset($_POST['confirmation'])){
   if(empty($_POST['confirmation'])){
     $errors['confirmation'] = 'Ce champ ne peut pas être vide';
   }else if($_POST['confirmation'] !== $_POST['password']){
-  $errors['confirmation'] = 'Les mots ne passe de correspondent pas';
+  $errors['confirmation'] = 'Les mots de passe ne correspondent pas';
 }
-};
+}
+
 if(isset($_POST['pseudo'])){
   if(empty($_POST['pseudo'])){
-  $errors['pseudo'] = 'Ce champ ne peut pas être vide';}
+  $errors['pseudo'] = 'Ce champ ne peut pas être vide';
 }else if(strlen($_POST['pseudo']) <3 || strlen($_POST['pseudo']) >30){
-  $errors['pseudo'] = 'Votre pseudo doit faire entre 5 et 30 caractère';
+  $errors['pseudo'] = 'Votre pseudo doit faire entre 3 et 30 caractère';
 }
-};
+}
+
+}
+
+if (empty($errors)){
+  $sql = "INSERT INTO `users`(`id`, `email`, `password`, `pseudo`, `roles`) VALUES ([value-2],[value-3],[value-4],[value-5])";
+
+}
 
 
 ?>
@@ -48,24 +60,24 @@ if(isset($_POST['pseudo'])){
   </head>
   <body>    
     <form method="POST">
-        <h1 class = "text-warning">Inscription</h1><br>
+        <h1>Inscription</h1><br>
         <div class="form-group">
-            <label for="exampleInputEmail1">Adresse email</label>
+            <label for="exampleInputEmail1">Adresse email :</label>
             <input type="email" class="form-control <?= isset($errors['mail']) ? 'is-invalid' : '';?>" id="exampleInputEmail1" name= "mail" aria-describedby="emailHelp">
             <small id="emailHelp" class="form-text text-danger"><?= isset($errors['mail']) ? $errors['mail'] : '';?> </small>
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">Mot de passe</label>
+            <label for="exampleInputPassword1">Mot de passe :</label>
             <input type="password" class="form-control <?= isset($errors['password']) ? 'is-invalid' : '';?>" id="exampleInputPassword1" name= "password">
             <small id="passwordHelp" class="form-text text-danger"><?= isset($errors['password']) ? $errors['password'] : '';?> </small>
         </div>
         <div class="form-group">
-            <label for="confirmationmp">Confirmation mot de passe</label>
+            <label for="confirmationmp">Confirmation mot de passe :</label>
             <input type="password" class="form-control <?= isset($errors['confirmation']) ? 'is-invalid' : '';?>" id="exampleInputPassword1"name = "confirmation">
             <small id="confirmationHelp" class="form-text text-danger"><?= isset($errors['confirmation']) ? $errors['confirmation'] : '';?> </small>
         </div>
         <div class="form-group">
-            <label for="pseudo">Pseudo</label>
+            <label for="pseudo">Pseudo :</label>
             <input type="text" class="form-control <?= isset($errors['pseudo']) ? 'is-invalid' : '';?>" id="pseudo"name = "pseudo">
             <small id="pseudoHelp" class="form-text text-danger"><?= isset($errors['pseudo']) ? $errors['pseudo'] : '';?> </small>
         </div>
