@@ -5,18 +5,22 @@ require_once 'config/connect.php';
 $errors = [];
 if(isset($_POST['inscription'])){
 
-if(isset($_POST['mail'])){
-  if(empty($_POST['mail'])){
+  if(isset($_POST['token']) && $_POST['token'] === $_SESSION['token']){
+
+  
+
+if(isset($_POST['mail']) && preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_POST['mail'])){
+    $errors['mail'] = 'Veuillez entrer une email valide';
+  }else if(empty($_POST['mail'])){
     $errors['mail'] = 'Ce champ ne peut pas être vide';
   }
-}
-
-if(isset($_POST['password'])){
+  
+if(isset($_POST['password'])){  
   if(empty($_POST['password'])){
     $errors['password'] = 'Ce champ ne peut pas être vide';
   }else {
     $password_encoder = password_hash($_POST['password'],PASSWORD_DEFAULT);
-    var_dump($password_encoder);
+    //var_dump($password_encoder);//
   }
 }
 
@@ -25,7 +29,7 @@ if(isset($_POST['confirmation'])){
     $errors['confirmation'] = 'Ce champ ne peut pas être vide';
   }else if($_POST['confirmation'] !== $_POST['password']){
   $errors['confirmation'] = 'Les mots de passe ne correspondent pas';
-}
+  }
 }
 
 if(isset($_POST['pseudo'])){
@@ -33,16 +37,21 @@ if(isset($_POST['pseudo'])){
   $errors['pseudo'] = 'Ce champ ne peut pas être vide';
 }else if(strlen($_POST['pseudo']) <3 || strlen($_POST['pseudo']) >30){
   $errors['pseudo'] = 'Votre pseudo doit faire entre 3 et 30 caractère';
-}
-}
-
+  }
 }
 
-if (empty($errors)){
-  $sql = "INSERT INTO `users`(`id`, `email`, `password`, `pseudo`, `roles`) VALUES ([value-2],[value-3],[value-4],[value-5])";
+  $roles = json_encode(['ROLE_USER']);
 
+  if (empty($errors)){
+    $sql = "INSERT INTO `users`(`email`, `password`, `pseudo`, `roles`) VALUES ('".$_POST['mail']."','".$password_encoder."','".$_POST['pseudo']."','".$roles."')";
+    if ($mysqli -> query($sql) === true) {
+      redirectToRoute();
+    }else {
+      echo 'Erreur';
+    }
+  }
+  }
 }
-
 
 ?>
 
@@ -60,6 +69,7 @@ if (empty($errors)){
   </head>
   <body>    
     <form method="POST">
+        <input type="hidden" name='token' value = "<?= minitoken()?>">
         <h1>Inscription</h1><br>
         <div class="form-group">
             <label for="exampleInputEmail1">Adresse email :</label>
