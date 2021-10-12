@@ -9,7 +9,7 @@ if(isset($_POST['inscription'])){
 
   
 
-if(isset($_POST['mail']) && preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_POST['mail'])){
+if(isset($_POST['mail']) &&! preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_POST['mail'])){
     $errors['mail'] = 'Veuillez entrer une email valide';
   }else if(empty($_POST['mail'])){
     $errors['mail'] = 'Ce champ ne peut pas être vide';
