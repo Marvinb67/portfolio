@@ -3,20 +3,20 @@ require_once 'config/framework.php';
 require_once 'config/connect.php';
 
 $errors = [];
-if(isset($_POST['inscription_mail'])){
+if(isset($_POST['inscription_email'])){
 
-  if(isset($_POST['token']) && $_POST['token'] === $_SESSION['token']){
+  if(isset($_POST['token_mail']) && $_POST['token_mail'] === $_SESSION['token_mail']){
 
   
 
-if(isset($_POST['mail']) &&! preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_POST['mail'])){
-    $errors['mail'] = 'Veuillez entrer une email valide';
-  }else if(empty($_POST['mail'])){
-    $errors['mail'] = 'Ce champ ne peut pas être vide';
+if(isset($_POST['email']) &&! preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_POST['email'])){
+    $errors['email'] = 'Veuillez entrer une email valide';
+  }else if(empty($_POST['email'])){
+    $errors['email'] = 'Ce champ ne peut pas être vide';
   }
 
   if (empty($errors)){
-    $sql = $sql = "UPDATE `users` SET (`email`='".$_POST['mail']."' WHERE id = '".$_SESSION['users']."')" ;
+    $sql = "UPDATE `users` SET email ='".$_POST['email']."' WHERE id = '".$_SESSION['users']."'" ;
 
     if ($mysqli -> query($sql) === true) {
       redirectToRoute('/login.php');
@@ -39,10 +39,10 @@ if(isset($_POST['password']) && empty($_POST['password'])){
   }
 
   if (empty($errors)){
-    $sql = $sql = "UPDATE `users` SET `password`='".$_POST['password']."' WHERE id = '".$_SESSION['users']."'" ;
+    $sql = $sql = "UPDATE `users` SET password='".$_POST['password']."' WHERE id = '".$_SESSION['users']."'" ;
 
     if ($mysqli -> query($sql) === true) {
-      redirectToRoute('/login.php');
+      redirectToRoute();
     }else {
       echo 'Erreur';
      }
@@ -63,7 +63,7 @@ if(isset($_POST['pseudo']) && empty($_POST['pseudo'])){
   }
 
   if (empty($errors)){
-    $sql = $sql = "UPDATE `users` SET (`pseudo`='".$_POST['pseudo']."' WHERE id = '".$_SESSION['users']."')" ;
+    $sql = $sql = "UPDATE `users` SET pseudo='".$_POST['pseudo']."' WHERE id = '".$_SESSION['users']."'" ;
 
     if ($mysqli -> query($sql) === true) {
       redirectToRoute('/login.php');
@@ -91,18 +91,18 @@ if(isset($_POST['pseudo']) && empty($_POST['pseudo'])){
   </head>
   <body>    
     <form method="POST">
-        <input type="hidden" name='token' value = "<?= minitoken()?>">
+        <input type="hidden" name='token_mail' value = "<?= minitoken('token_mail')?>">
         <h1>Mon Compte</h1><br>
         <h4>Modifier Email</h4><br>
         <div class="form-group">
             <label for="exampleInputEmail1">Modifier adresse email :</label>
-            <input type="email" class="form-control <?= isset($errors['mail']) ? 'is-invalid' : '';?>" id="exampleInputEmail1" name= "mail" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-danger"><?= isset($errors['mail']) ? $errors['mail'] : '';?> </small>
-            <button type="submit" class="btn btn-primary" name="inscription_mail">Modifier</button>
+            <input type="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : '';?>" id="exampleInputEmail1" name= "email" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-danger"><?= isset($errors['email']) ? $errors['email'] : '';?> </small>
+            <button type="submit" class="btn btn-primary" name="inscription_email">Modifier</button>
         </div>
      </form>
      <form method="POST">
-        <input type="hidden" name='token_password' value = "<?= minitoken()?>">
+        <input type="hidden" name='token_password' value = "<?= minitoken('token_password')?>">
         <h4>Modifier Mot de passe</h4><br>
         <div class="form-group">
             <label for="exampleInputPassword1"> Nouveau mot de passe :</label>
@@ -115,7 +115,7 @@ if(isset($_POST['pseudo']) && empty($_POST['pseudo'])){
         </div>
      </form>
      <form method="POST">
-        <input type="hidden" name='token_pseudo' value = "<?= minitoken()?>">
+        <input type="hidden" name='token_pseudo' value = "<?= minitoken('token_pseudo')?>">
         <h4>Modifier pseudo</h4><br>
         <div class="form-group">
             <label for="exampleInputPseudo1">Modifier pseudo :</label>
