@@ -2,6 +2,7 @@
 require_once 'config/framework.php';
 require_once 'config/connect.php';
 $errors = [];
+if(isset($_POST['connexion'])){
 if(isset($_POST['token']) && $_POST['token'] === $_SESSION['token']){
 
   if(isset($_POST['email']) && !preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_POST['email'])) {
@@ -9,13 +10,13 @@ if(isset($_POST['token']) && $_POST['token'] === $_SESSION['token']){
   }
 
 if(empty($errors)) {
-  $sql = "SELECT * FROM `users` WHERE 'email' = '".$_POST['email']."'";
+  $sql = "SELECT * FROM `users` WHERE email = '".$_POST['email']."'";
   if ($result = $mysqli->query($sql)) { 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            if(password_verify($_POST['mot_de_passe'], $user['password'])){
-            $_SESSION['users'] = $user;
-            redirectToRoute();
+            if(password_verify($_POST['mot_de_passe'], $row['password'] == true)){
+            $_SESSION['users'] = $row;
+            redirectToRoute('/inscription.php');
             }else {
               $errors['account'] = 'Compte invalide';
             }
@@ -23,16 +24,16 @@ if(empty($errors)) {
         }
         
     }else {
-        $errors['account'] = 'Compte invalide';
+        $errors['account'] = 'Compte pas bon';
     }
     
     $result->close();
+      }
     }
   }
 }
-  
-
 ?>
+<?= (isset($errors['account']) ? $errors['account'] : '');?>
 
 <!doctype html>
 <html lang="fr">
@@ -46,14 +47,13 @@ if(empty($errors)) {
   </head>
   <body>
     <form method = "POST">
-      <?= (isset($errors['account']) ? $errors['account'] : '');?>
       <input type="hidden" name='token' value = "<?= minitoken()?>">
       <h1>Connexion</h1>
       <p>Remplissez les champs suivant pour vous connecter.</p>
       <div class="form-group">
         <label for="exampleInputEmail1">Email</label>
-        <input type="email" name = "email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder = "jean-jacques@mail.fr">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <input type="email" name = "email" class="form-control <?= isset($errors['mail']) ? 'is-invalid' : '';?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder = "jean-jacques@mail.fr">
+        <small id="emailHelp" class="form-text text-muted"><?= isset($errors['mail']) ? $errors['mail'] : '';?></small>
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Mot de passe</label>
