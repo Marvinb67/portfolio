@@ -45,13 +45,15 @@ if(isset($_POST['pseudo'])){
   if (empty($errors)){
     $sql = "INSERT INTO `users`(`email`, `password`, `pseudo`, `roles`) VALUES ('".$_POST['mail']."','".$password_encoder."','".$_POST['pseudo']."','".$roles."')";
     if ($mysqli -> query($sql) === true) {
-      redirectToRoute();
+      redirectToRoute('/login.php');
     }else {
       echo 'Erreur';
     }
   }
   }
 }
+
+
 
 ?>
 
