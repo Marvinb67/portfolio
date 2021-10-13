@@ -13,10 +13,10 @@ if(empty($errors)) {
   $sql = "SELECT * FROM `users` WHERE email = '".$_POST['email']."'";
   if ($result = $mysqli->query($sql)) { 
     if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            if(password_verify($_POST['mot_de_passe'], $row['password'] == true)){
-            $_SESSION['users'] = $row;
-            redirectToRoute('/inscription.php');
+        while ($users = $result->fetch_assoc()) {
+            if(password_verify($_POST['mot_de_passe'], $users['password'])){
+            $_SESSION['users'] = $users;
+            redirectToRoute('/compte.php');
             }else {
               $errors['account'] = 'Compte invalide';
             }
@@ -24,7 +24,7 @@ if(empty($errors)) {
         }
         
     }else {
-        $errors['account'] = 'Compte pas bon';
+        $errors['account'] = 'Compte Invalid';
     }
     
     $result->close();
