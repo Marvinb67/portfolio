@@ -1,6 +1,7 @@
 <?php
 require_once 'config/framework.php';
 require_once 'config/connect.php';
+require_once 'header.php';
 
 $errors = [];
 if(isset($_POST['inscription_email'])){
@@ -16,7 +17,7 @@ if(isset($_POST['email']) &&! preg_match('#^[\w.-]+@[\w.-]+.[a-z]{2,6}$#i', $_PO
   }
 
   if (empty($errors)){
-    $sql = "UPDATE `users` SET email ='".$_POST['email']."' WHERE id = '".$_SESSION['users']."'" ;
+    $sql = "UPDATE `users` SET email ='".$_POST['email']."' WHERE id = '".$_SESSION['users']['id']."'" ;
 
     if ($mysqli -> query($sql) === true) {
       redirectToRoute('/login.php');
@@ -36,13 +37,15 @@ if(isset($_POST['password']) && empty($_POST['password'])){
     $errors['password'] = 'Ce champ ne peut pas être vide';
   }else if($_POST['confirmation'] !== $_POST['password']){
     $errors['Confirmation'] = 'Les mots de passe ne correspondent pas';
+  }else {
+    $password_encoder = password_hash($_POST['password'],PASSWORD_DEFAULT);
   }
 
   if (empty($errors)){
-    $sql = $sql = "UPDATE `users` SET password='".$_POST['password']."' WHERE id = '".$_SESSION['users']."'" ;
+    $sql = "UPDATE `users` SET password='".$password_encoder."' WHERE id = '".$_SESSION['users']['id']."'" ;
 
     if ($mysqli -> query($sql) === true) {
-      redirectToRoute();
+      redirectToRoute('/login.php');
     }else {
       echo 'Erreur';
      }
@@ -63,7 +66,7 @@ if(isset($_POST['pseudo']) && empty($_POST['pseudo'])){
   }
 
   if (empty($errors)){
-    $sql = $sql = "UPDATE `users` SET pseudo='".$_POST['pseudo']."' WHERE id = '".$_SESSION['users']."'" ;
+    $sql = $sql = "UPDATE `users` SET pseudo='".$_POST['pseudo']."' WHERE id = '".$_SESSION['users']['id']."'" ;
 
     if ($mysqli -> query($sql) === true) {
       redirectToRoute('/login.php');
@@ -73,23 +76,42 @@ if(isset($_POST['pseudo']) && empty($_POST['pseudo'])){
     }
   }
 }
+if(isset($_POST['Supprimer'])){
+
+  if(isset($_POST['token_delete']) && $_POST['token_delete'] === $_SESSION['token_delete']){
+    if (empty($errors)){
+      $sql = "DELETE FROM `users` WHERE id = '".$_SESSION['users']['id']."'";
+  
+      if ($mysqli -> query($sql) === true) {
+        redirectToRoute('/login.php');
+      }else {
+        echo 'Erreur';
+       }
+      }
+    }
+  }
+
+  if(isset($_POST['deco'])){
+
+    if(isset($_POST['token_deco']) && $_POST['token_deco'] === $_SESSION['token_deco']){
+      if (empty($errors)){
+        $sql = "DELETE FROM `users` WHERE id = '".$_SESSION['users']['id']."'";
+    
+        if ($mysqli -> query($sql) === true) {
+          redirectToRoute('/login.php');
+        }else {
+          echo 'Erreur';
+         }
+        }
+      }
+    }
+
 
 ?>
 
 
-<!doctype html>
-<html lang="fr">
-  <head>
-    
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>Mon Compte</title>
-  </head>
-  <body>    
     <form method="POST">
         <input type="hidden" name='token_mail' value = "<?= minitoken('token_mail')?>">
         <h1>Mon Compte</h1><br>
@@ -123,10 +145,11 @@ if(isset($_POST['pseudo']) && empty($_POST['pseudo'])){
             <small id="emailHelp" class="form-text text-danger"><?= isset($errors['pseudo']) ? $errors['pseudo'] : '';?> </small>
             <button type="submit" class="btn btn-primary" name="inscription_pseudo">Modifier</button>
         </div>
-     </form><br>
-
-        
-        <button onclick="return confirm('Voulez vous vraiment supprimer votre compte ?')" class = "btn btn-danger">Supprimer le compte</button>
+    </form><br>
+      <form method ='POST'>
+      <input type="hidden" name='token_delete' value = "<?= minitoken('token_delete')?>">
+      <button onclick="return confirm('Voulez vous vraiment supprimer votre compte ?')" class = "btn btn-danger" name = 'Supprimer'>Supprimer le compte</button>
+    </from>
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
