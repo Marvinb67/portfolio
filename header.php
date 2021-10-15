@@ -3,7 +3,7 @@ require_once 'config/framework.php';
 require_once 'config/connect.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <title>Mini Portfolio</title>
 <meta charset="utf-8">
@@ -22,8 +22,7 @@ require_once 'config/connect.php';
         <li><a href="login.php"><i class="icon-trophy"></i> Connexion</a></li>
         <li><a href="compte.php"><i class="icon-picture"></i> Compte</a></li>
         <li><a href="logout.php"><i class="icon-doc-text"></i>Déconnexion</a></li>
+        <li><a href="contact.php"><i class="icon-doc-text"></i>Contact</a></li>
       </ul>
       <div class="nav-collapse collapse"></div>
-    </div>
-  </div>
-</div>
+      <!-- Example split danger button -->
