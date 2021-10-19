@@ -13,7 +13,7 @@ for ($i = 0; $i < 13; ++$i) {
     $slug = ($faker->slug);
 }
 
-$auteurs = "SELECT 'id' from 'users' where 'auteur' = 'id'";
+$auteurs = "SELECT 'id' from 'users' where 'auteur' = '".$_SESSION['users']['id']."'";
 $sql = "INSERT INTO `projets`(`titre`, `content`, `image`, `creation`, `slug`, `auteur`) VALUES ('".$titre."','".$content."','".$image."','".$creation."','".$slug."','".$auteurs."')";
 if ($mysqli->query($sql) === true) {
     redirectToRoute();
