@@ -15,7 +15,7 @@ require_once 'config/connect.php';
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger" id="navbar">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-danger" id="navbar">
         <a class="navbar-brand" href="index.php">Acceuil</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,23 +25,23 @@ require_once 'config/connect.php';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="icon-user"></i>Profil<span
+                    <a class="nav-link" href=""><i class="icon-user"></i>Profil<span
                             class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Compétences<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="compétences.php">Compétences<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Projets<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="projets.php">Projets<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">CV<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="cv.php">CV<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Menu
+                    data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    Menu :
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="register.php">Inscription</a>

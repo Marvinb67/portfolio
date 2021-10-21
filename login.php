@@ -32,19 +32,22 @@ if (isset($_POST['connexion'])) {
 <?= (isset($errors['account']) ? $errors['account'] : ''); ?>
 
 
-<form method = "POST">
-  <input type="hidden" name='token' value = "<?= minitoken(); ?>">
-  <h1>Connexion</h1>
-  <p>Remplissez les champs suivant pour vous connecter.</p>
-  <div class="form-group">
-   <label for="exampleInputEmail1">Email</label>
-   <input type="email" name = "email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder = "jean-jacques@mail.fr">
-   <small id="emailHelp" class="form-text text-danger"><?= isset($errors['email']) ? $errors['email'] : ''; ?></small>
-  </div>
-  <div class="form-group">
-   <label for="exampleInputPassword1">Mot de passe</label>
-   <input type="password" name = "mot_de_passe" class="form-control" id="exampleInputPassword1" placeholder = "Mot de passe">
-  </div>
-  <button type="submit" name = "connexion" class="btn btn-primary">Connexion</button>
-  <p>Vous n'avez pas de compte? <a href="register.php">Inscrivez vous</p>.
+<form method="POST">
+    <input type="hidden" name='token' value="<?= minitoken(); ?>">
+    <h1>Connexion</h1>
+    <p>Remplissez les champs suivant pour vous connecter.</p>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email</label>
+        <input type="email" name="email" class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>"
+            id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="jean-jacques@mail.fr">
+        <small id="emailHelp"
+            class="form-text text-danger"><?= isset($errors['email']) ? $errors['email'] : ''; ?></small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Mot de passe</label>
+        <input type="password" name="mot_de_passe" class="form-control" id="exampleInputPassword1"
+            placeholder="Mot de passe">
+    </div>
+    <button type="submit" name="connexion" class="btn btn-primary">Connexion</button>
+    <p>Vous n'avez pas de compte? <a href="register.php">Inscrivez vous</p>.
 </form>

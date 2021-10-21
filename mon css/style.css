@@ -5,3 +5,7 @@ body {
 .nav:hover{
    color: #203748; 
 }
+
+p, a{
+    font-size: larger;
+}
