@@ -21,5 +21,4 @@ for ($i = 0; $i < 500; ++$i) {
     } else {
         echo 'Erreur';
     }
-}
-*/
+}*/
