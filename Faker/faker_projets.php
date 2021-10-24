@@ -15,7 +15,7 @@ for ($i = 0; $i < 500; ++$i) {
     $sql = 'SELECT id FROM users ORDER BY rand()';
     $result = $mysqli->query($sql);
     $user = $result->fetch_assoc();
-    $sql = "INSERT INTO `projets`(`titre`, `content`, `image`, `creation`, `slug`, `auteur`) VALUES ('".$titre."','".$content."','".$image."','".$creation."','".$slug."','".$user['id']."')";
+    $sql = "INSERT INTO `projets`(`title`, `content`, `image`, `created_at`, `slug`, `author`) VALUES ('".$titre."','".$content."','".$image."','".$creation."','".$slug."','".$user['id']."')";
     if ($mysqli->query($sql) === true) {
         echo 'Réussite';
     } else {

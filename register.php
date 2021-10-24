@@ -40,7 +40,7 @@ if (isset($_POST['inscription'])) {
 
 
 <form method="POST">
-    <input type="hidden" name='token' value="<?= minitoken(); ?>">
+    <input type="hidden" name="token" value="<?= minitoken(); ?>">
     <h1>Inscription</h1><br>
     <div class="form-group">
         <label for="exampleInputEmail1">Adresse email :</label>

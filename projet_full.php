@@ -5,14 +5,13 @@ require_once 'config/framework.php';
 require_once 'config/connect.php';
 require_once 'header.php';
 $faker = Faker\Factory::create('fr_FR');
-
-$sql = "SELECT * projets WHERE slug = '".$_GET['slug'].'"';
-$result = $mysqli->query($sql);
-$projets = $result->fetch_assoc();
-if ($mysqli->query($sql) === true) {
-    echo $projets['images'];
-} else {
-    echo 'Erreur';
+$sql = "SELECT * FROM projets WHERE slug = '".$_GET['slug'].'"';
+if ($result = $mysqli->query($sql)) {
+    if ($result->num_rows > 0) {
+        while ($projet = $result->fetch_assoc()) {
+            echo "<p><?= '".$projet['content']."';?></p>";
+        }
+    }
 }
-?>
-    
+    ?>
+

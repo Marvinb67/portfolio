@@ -15,7 +15,7 @@ require_once 'config/connect.php';
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-xl navbar-dark bg-danger" id="navbar">
+    <nav class="navbar navbar-expand-xl navbar-light bg-warning" id="navbar">
         <a class="navbar-brand" href="index.php">Acceuil</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

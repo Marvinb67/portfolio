@@ -6,7 +6,7 @@ require_once '../config/connect.php';
 require_once '../header.php';
 
 /*$faker = Faker\Factory::create('fr_FR');
-    for ($i = 0; $i < 376; ++$i) {
+    for ($i = 0; $i < 500; ++$i) {
         $faker->email;
         $password = $faker->password;
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
