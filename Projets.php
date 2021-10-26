@@ -5,7 +5,7 @@ require_once 'header.php';
 require_once 'Faker/vendor/autoload.php';
 $faker = Faker\Factory::create('fr_FR');
 
-$sql = "SELECT * FROM projets ORDER BY 'created_at' DESC";
+$sql = "SELECT * FROM projets ORDER BY 'created_at' LIMIT 0,15";
 $result = $mysqli->query($sql);
 while ($result->fetch_assoc()) {
     ?>
@@ -18,12 +18,13 @@ while ($result->fetch_assoc()) {
                     <img class="card-img-top" src=" <?php echo $projet['image']; ?> " alt="Card image cap">
 
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $projet['title']; ?></h5>
+                        <h5 class="card-title"><?php echo $projet['titre']; ?></h5>
                         <p class="card-text"><?php if (strlen($projet['content']) > 20) {
         $long = 80;
         $projet['content'] = substr($projet['content'], 0, $long);
         echo $projet['content'];
     }?>...<a href="projet_full.php?slug=<?=$projet['slug']; ?>">Lire la suite</a></p>
+    <?php dump($projet); ?>
                         <a href="#" class="btn btn-secondary">Full Details</a>
                     </div>
                 </div>
@@ -31,13 +32,7 @@ while ($result->fetch_assoc()) {
         </div>
         <?php }
 }
-for ($i = 1; $i <= $nbpages; ++$i) {
-    echo "$i/";
-}
 ?>
     </div>
-    
-
-    
-</nav>
+ 
 </div>
